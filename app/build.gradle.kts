@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+    kotlin("kapt") version "1.9.0"
 }
 
 android {
@@ -50,22 +51,52 @@ android {
 }
 
 dependencies {
+    val room_ver = "2.6.1"
+    // Kapt для Room
+    kapt("androidx.room:room-compiler:$room_ver")
 
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.lifecycle.runtime.ktx)
-    implementation(libs.androidx.activity.compose)
-    implementation(platform(libs.androidx.compose.bom))
+
+
+    // Koin Core
+    implementation(libs.koin.core)
+    // Koin для Android (включает поддержку Android компонентов)
+    implementation(libs.koin.android)
+    // Koin для Jetpack Compose
+    implementation(libs.koin.androidx.compose)
+
+    // WorkManager для фоновых задач
+    implementation(libs.androidx.work.runtime.ktx)
+
+    // Навигация с использованием Jetpack Compose
+    implementation(libs.androidx.navigation.compose)
+
+    // Room для работы с базой данных
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
+    annotationProcessor(libs.androidx.room.compiler)
+
+    // Jetpack Compose
+    implementation(platform(libs.androidx.compose.bom)) // Compose BOM для управления версиями
     implementation(libs.androidx.ui)
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
+
+    // Material Design 3
     implementation(libs.androidx.material3)
-    implementation(libs.androidx.room.common)
-    implementation(libs.androidx.room.ktx)
+
+    // Core библиотеки Android
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.lifecycle.runtime.ktx)
+    implementation(libs.androidx.activity.compose)
+
+    // Тестирование
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.ui.test.junit4)
+
+    // Для дебага
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 }

@@ -14,3 +14,13 @@ data class TaskEntity(
 ){
     fun toDomainModel() = Task(id, title, description, dueDate, isCompleted)
 }
+// Функция расширения для преобразования Task в TaskEntity
+fun Task.toEntity(): TaskEntity {
+    return TaskEntity(
+        id = this.id,
+        title = this.title,
+        description = this.description,
+        dueDate = this.dueDate,
+        isCompleted = this.isCompleted
+    )
+}
